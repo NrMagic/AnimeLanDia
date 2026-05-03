@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import api from "./src/api/Api";
 import AnimeCard from "./src/components/AnimeCard";
+import { PrimaryButton, IconButton } from "./src/components/Buttons.jsx";
 
 export default function App() {
   const [animes, setAnimes] = useState([]);
@@ -20,8 +21,8 @@ export default function App() {
     setLoading(true);
     try {
       const endpoint = query
-        ? `/anime?filter[text]=${query}&page[limit]=10`
-        : "/anime?page[limit]=10&page[offset]=0";
+        ? `/anime?filter[text]=${query}&page[limit]=20`
+        : "/anime?page[limit]=20&page[offset]=0";
 
       const response = await api.get(endpoint);
       setAnimes(response.data.data);
@@ -46,16 +47,20 @@ export default function App() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "black", alignItems: "center" }}>
+
+
       {/* Barra de pesquisa */}
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.input}
           placeholder="Buscar anime..."
+          placeholderTextColor="#aaa"
           value={search}
           onChangeText={setSearch}
         />
-        <Button title="Pesquisar" onPress={() => loadAnimes(search)} />
+        {/*<PrimaryButton title="Pesquisar" onPress={() => loadAnimes(search)} />*/}
+        <IconButton title="Pesquisar" icon="search" onPress={() => loadAnimes(search)} />
       </View>
 
       {/* Lista de animes */}
@@ -63,6 +68,9 @@ export default function App() {
         data={animes}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <AnimeCard anime={item} />}
+        numColumns={5} // <-- define 5 cards por linha
+        columnWrapperStyle={{ justifyContent: "space-arroud"}} // espaçamento entre colunas
+        contentContainerStyle={{ padding: 10 }} // separa da barra de pesquisa
       />
     </View>
   );
@@ -77,7 +85,9 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     padding: 10,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "black",
+    width: "50%",
+    marginBottom: 20, // separa da lista
   },
   input: {
     flex: 1,
@@ -86,5 +96,6 @@ const styles = StyleSheet.create({
     padding: 8,
     marginRight: 8,
     borderRadius: 5,
+    color: "white"
   },
 });

@@ -7,7 +7,10 @@ export default function useTranslate(text) {
     async function translate() {
       if (!text) return;
       try {
-        const res = await fetch("https://libretranslate.com/translate", {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000);
+
+        const res = await fetch("https://translate.argosopentech.com/translate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -16,17 +19,19 @@ export default function useTranslate(text) {
             target: "pt",
             format: "text",
           }),
+          signal: controller.signal,
         });
+        clearTimeout(timeout);
 
         const data = await res.json();
-        setTranslated(data.translatedText); // atualiza o estado
+        setTranslated(data?.translatedText || text);
       } catch (error) {
         console.error("Erro na tradução:", error);
-        setTranslated(text); // fallback para o texto original
+        setTranslated(text);
       }
     }
 
-    translate(); // aqui você chama a função
+    translate();
   }, [text]);
 
   return translated;
