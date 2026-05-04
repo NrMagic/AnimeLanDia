@@ -18,23 +18,43 @@ Este projeto é um MVP (Produto Mínimo Viável) criado em 8 horas para demonstr
 ## 📂 Estrutura de Pastas
 ANIMELANDIA/
  ├── .idea/              # Configurações da IDE
+ 
  ├── axios-mob/          # Módulo auxiliar (possível integração com Axios)
+ 
  ├── .expo/              # Configurações do Expo
+ 
  ├── assets/             # Imagens, ícones e recursos estáticos
+ 
  ├── node_modules/       # Dependências instaladas
+ 
  ├── src/                # Código-fonte principal
+ 
  │   ├── api/            # Configuração da API externa
+ 
  │   │   └── Api.js
+ 
  │   ├── components/     # Componentes reutilizáveis
+ 
  │   │   ├── AnimeCard.js
+ 
  │   │   └── Buttons.jsx
+ 
  │   ├── hooks/          # Hooks customizados
+ 
  │   │   └── useTranslate.js
+ 
  │   └── ...             # Outras futuras implementações
+ 
  ├── .gitignore          # Arquivos ignorados pelo Git
+ 
  ├── App.js              # Ponto de entrada principal do app
+ 
  ├── app.json            # Configurações do Expo
+ 
  ├── index.js            # Inicialização da aplicação
+ 
  ├── package.json        # Dependências e scripts do projeto
+ 
  ├── package-lock.json   # Lockfile do npm
+ 
  └── README.md           # Documentação do projeto
