@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   secondaryButton: {
+    width: "30%",
+    height: 40,
     backgroundColor: "#444",
     paddingVertical: 12,
     paddingHorizontal: 20,

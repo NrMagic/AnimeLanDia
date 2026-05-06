@@ -37,7 +37,7 @@ export default function AnimeCard({ anime }) {
               </Text>
               <Text style={styles.modalSynopsis}>{translatedSynopsis}</Text>
             </ScrollView>
-           <SecondaryButton/>
+           <SecondaryButton title="OK" onPress={() => setModalVisible(false)} />
           </View>
         </View>
       </Modal>
@@ -92,11 +92,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalContent: {
+    alignItems: "center",
     backgroundColor: "#1a1a1a",
     padding: 20,
     borderRadius: 10,
-    width: "90%",
-    maxHeight: "80%",
+    width: "50%",
+    maxHeight: "30%",
   },
   modalTitle: {
     fontSize: 18,

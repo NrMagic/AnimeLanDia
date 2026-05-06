@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react";
 
 export default function useTranslate(text) {
-  const [translated, setTranslated] = useState("");
+  const [translated, setTranslated] = useState(text || "");
 
   useEffect(() => {
+    if (!text) {
+      setTranslated("");
+      return;
+    }
+
+    let isMounted = true;
+
     async function translate() {
-      if (!text) return;
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 5000);
+        const timeout = setTimeout(() => controller.abort(), 8000);
 
-        const res = await fetch("https://translate.argosopentech.com/translate", {
+        const res = await fetch("https://libretranslate.com/translate", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             q: text,
             source: "en",
@@ -21,17 +29,32 @@ export default function useTranslate(text) {
           }),
           signal: controller.signal,
         });
+
         clearTimeout(timeout);
 
+        if (!res.ok) {
+          throw new Error(`Erro HTTP: ${res.status}`);
+        }
+
         const data = await res.json();
-        setTranslated(data?.translatedText || text);
+
+        if (isMounted) {
+          setTranslated(data?.translatedText || text);
+        }
       } catch (error) {
         console.error("Erro na tradução:", error);
-        setTranslated(text);
+
+        if (isMounted) {
+          setTranslated(text);
+        }
       }
     }
 
     translate();
+
+    return () => {
+      isMounted = false;
+    };
   }, [text]);
 
   return translated;

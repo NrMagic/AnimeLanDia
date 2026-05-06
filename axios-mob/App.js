@@ -22,7 +22,7 @@ export default function App() {
     try {
       const endpoint = query
         ? `/anime?filter[text]=${query}&page[limit]=20`
-        : "/anime?page[limit]=20&page[offset]=0";
+        : "/anime?page[limit]=20&page[offset]=2";
 
       const response = await api.get(endpoint);
       setAnimes(response.data.data);
@@ -58,6 +58,7 @@ export default function App() {
           placeholderTextColor="#aaa"
           value={search}
           onChangeText={setSearch}
+          onSubmitEditing={() => loadAnimes(search)}
         />
         {/*<PrimaryButton title="Pesquisar" onPress={() => loadAnimes(search)} />*/}
         <IconButton title="Pesquisar" icon="search" onPress={() => loadAnimes(search)} />
